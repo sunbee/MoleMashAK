@@ -12,6 +12,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import android.view.MotionEvent
 import android.view.View
+
 class Mole(private val context: Context, private val gameView: View) {
     private val moleBitmap: Bitmap = BitmapFactory.decodeResource(context.resources, R.drawable.mole)
     private var x: Float = 0f
@@ -20,6 +21,7 @@ class Mole(private val context: Context, private val gameView: View) {
 
     private lateinit var gameScope: CoroutineScope
     private val TAG = "MOLE SPRITE"
+
     fun startAnimation() {
         gameScope = CoroutineScope(Dispatchers.Main)
 
@@ -32,19 +34,23 @@ class Mole(private val context: Context, private val gameView: View) {
             }
         }
     }
+
     fun stopAnimation() {
         gameScope.cancel()
     }
+
     private fun updatePosition(canvasWidth: Int, canvasHeight: Int) {
         x = (0 until canvasWidth - moleBitmap.width).random().toFloat()
         y = (0 until canvasHeight - moleBitmap.height).random().toFloat()
         isEnabled = true // Enable the mole when updating position
     }
+
     fun draw(canvas: Canvas) {
         if (isEnabled) {
             canvas.drawBitmap(moleBitmap, x, y, null)
         }
     }
+
     fun handleTouchEvent(event: MotionEvent): Boolean {
         if (event.action == MotionEvent.ACTION_DOWN && isEnabled) {
             val touchX = event.x
@@ -56,6 +62,7 @@ class Mole(private val context: Context, private val gameView: View) {
         }
         return false // Mole was not touched
     }
+
     private fun isTouched(touchX: Float, touchY: Float): Boolean {
         val moleRight = x + moleBitmap.width
         val moleBottom = y + moleBitmap.height

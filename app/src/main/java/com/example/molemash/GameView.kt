@@ -8,6 +8,7 @@ import android.graphics.Rect
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+
 class GameView(context: Context, levelSettings: LevelSettings) : View(context) {
     private var numberMoles: Int = levelSettings.getMolesCount(levelSettings.currentLevel);
     private var molesArray: Array<Mole> = Array(numberMoles) { Mole(context, this)}
@@ -24,6 +25,7 @@ class GameView(context: Context, levelSettings: LevelSettings) : View(context) {
             mole.draw(canvas)
         }
     }
+
     override fun onTouchEvent(event: MotionEvent): Boolean {
         for (mole in molesArray) {
             if (mole.handleTouchEvent(event)) {
@@ -34,17 +36,20 @@ class GameView(context: Context, levelSettings: LevelSettings) : View(context) {
         }
         return super.onTouchEvent(event)
     }
+
     fun startMoleAnimation() {
         for (mole in molesArray) {
             mole.startAnimation()
         }
         invalidate() // Request initial draw
     }
+
     fun stopMoleAnimation() {
         for (mole in molesArray) {
             mole.stopAnimation()
         }
     }
+
     fun reset(levelSettings: LevelSettings) {
         numberMoles = levelSettings.getMolesCount(levelSettings.currentLevel)
         molesArray = Array(numberMoles) { Mole(context, this)}

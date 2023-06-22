@@ -7,11 +7,13 @@ import android.view.Gravity
 import android.view.ViewGroup
 import android.widget.Button
 import com.example.molemash.databinding.ActivityMainBinding
+
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var gameView: GameView
     private val TAG = "MAIN ACTIVITY"
     private val levelSettings: LevelSettings = LevelSettings(this)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

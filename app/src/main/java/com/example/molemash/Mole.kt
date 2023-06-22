@@ -20,7 +20,7 @@ class Mole(private val context: Context, private val gameView: View) {
     private var isEnabled: Boolean = true
 
     private lateinit var gameScope: CoroutineScope
-    private val TAG = "MOLE"
+    private val TAG = "MOLE SPRITE"
 
     fun startAnimation() {
         gameScope = CoroutineScope(Dispatchers.Main)
@@ -65,5 +65,9 @@ class Mole(private val context: Context, private val gameView: View) {
         val moleRight = x + moleBitmap.width
         val moleBottom = y + moleBitmap.height
         return (touchX in x..moleRight) && (touchY in y..moleBottom)
+    }
+
+    fun getPosition(): String {
+        return "X: ${x} Y: ${y}, W: ${moleBitmap.height}, H: ${moleBitmap.width}"
     }
 }

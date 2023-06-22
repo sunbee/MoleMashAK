@@ -15,8 +15,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -33,7 +31,6 @@ class MainActivity : AppCompatActivity() {
         startButton.setOnClickListener {
             gameView.startMoleAnimation()
             Log.d(TAG, "W: ${gameView.height}")
-            mole.startAnimation()
         }
 
         val quitButton: Button = binding.quitButton

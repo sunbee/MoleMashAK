@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:id="@+id/headerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="98dp"
+        android:background="@color/design_default_color_primary_dark"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/startButton"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:text="Start" />
+
+        <Button
+            android:id="@+id/quitButton"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:text="Quit" />
+
+        <TextView
+            android:id="@+id/scoreTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:text="Score: 0"
+            android:textSize="24sp" />
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/gameCanvasContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <LinearLayout
+        android:id="@+id/footerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="103dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/design_default_color_primary_dark"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/level1Button"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:text="Level 1" />
+
+        <Button
+            android:id="@+id/level2Button"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:text="Level 2" />
+
+        <Button
+            android:id="@+id/level3Button"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:text="Level 3" />
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -11,9 +11,28 @@ import android.view.View
 
 class GameView(context: Context, levelSettings: LevelSettings) : View(context) {
     private var numberMoles: Int = levelSettings.getMolesCount(levelSettings.currentLevel);
-    private var molesArray: Array<Mole> = Array(numberMoles) { Mole(context, this)}
+    private var molesArray: Array<Mole> = Array(numberMoles) { Mole(context, this, levelSettings)}
     private val canvasBitmap: Bitmap = BitmapFactory.decodeResource(context.resources, R.drawable.mole_hole)
     private val TAG: String = "CANVAS VIEW"
+    private var score: Int = 0
+
+    interface ScoreListener {
+        /*
+        * Pass the score between GameView and Main Activity.
+        * STEP 1 / 5 OBSERVER-PUBLISHER: Define the interface
+        * Main Activity must register as subscriber using
+        * 'setScoreListener' and override the 'onScoreUpdated'.
+        * */
+        fun onScoreUpdated(score: Int)
+    }
+    /*
+    * STEP 2 / 5 OBSERVER-PUBLISHER: Placeholder for registered subscriber.
+    * The subscriber must have the 'onScoreUpdated' implementation
+    * as callback that handles the published score.
+    * The subscriber must invoke 'setScoreListener' to register.
+    *  */
+    private var scoreListener: ScoreListener? = null
+
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
@@ -31,7 +50,9 @@ class GameView(context: Context, levelSettings: LevelSettings) : View(context) {
         for (mole in molesArray) {
             if (mole.handleTouchEvent(event)) {
                 // Mole was touched, handle the result
-                // ...
+                // Use Mole's built-in handler
+                score += 15
+                scoreListener?.onScoreUpdated(score)
                 return true
             }
         }
@@ -39,6 +60,7 @@ class GameView(context: Context, levelSettings: LevelSettings) : View(context) {
     }
 
     fun startMoleAnimation() {
+        score = 0
         for (mole in molesArray) {
             mole.startAnimation()
         }
@@ -52,7 +74,19 @@ class GameView(context: Context, levelSettings: LevelSettings) : View(context) {
     }
 
     fun reset(levelSettings: LevelSettings) {
+        // Recreate the array of Moles to start over
+        // Cal when Start is pressed
         numberMoles = levelSettings.getMolesCount(levelSettings.currentLevel)
-        molesArray = Array(numberMoles) { Mole(context, this)}
+        molesArray = Array(numberMoles) { Mole(context, this, levelSettings)}
     }
+
+    fun setScoreListener(listener: ScoreListener) {
+        /*
+        * STEP 3 / 5 OBSERVER-PUBLISHER: Subscribe for updated score
+        * Main Activity must subscribe once gameView is instantiated
+        * invoking this method on the newly minted GameView instance.
+        * */
+        scoreListener = listener
+    }
+
 }

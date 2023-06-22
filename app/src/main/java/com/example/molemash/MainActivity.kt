@@ -8,11 +8,17 @@ import android.view.ViewGroup
 import android.widget.Button
 import com.example.molemash.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), GameView.ScoreListener {
+    /*
+    * STEP 4 / 5 OBSERVER-PUBLISHER
+    * Implement the ScoreListener interface of GameView
+    * to get updates to the score.
+    * */
     private lateinit var binding: ActivityMainBinding
     private lateinit var gameView: GameView
     private val TAG = "MAIN ACTIVITY"
     private val levelSettings: LevelSettings = LevelSettings(this)
+    private var isPlaying: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +31,7 @@ class MainActivity : AppCompatActivity() {
 
         // Create and add the GameView instance to the gameCanvasContainer
         gameView = GameView(this, levelSettings)
+        gameView.setScoreListener(this) // Step 5/5 OBSERVER-PUBLISHER - Subscribe!
         gameViewContainer.addView(gameView)
 
         // Get difficulty level
@@ -48,15 +55,30 @@ class MainActivity : AppCompatActivity() {
 
         val startButton: Button = binding.startButton
         startButton.setOnClickListener {
-            gameView.reset(levelSettings)
-            gameView.startMoleAnimation()
-            Log.d(TAG, "W: ${gameView.height}")
+            if (isPlaying) {
+
+            } else {
+                isPlaying = true
+                gameView.reset(levelSettings)   // Reset the array of Moles in GameView to start over
+                gameView.startMoleAnimation()   // Reanimate all moles
+                Log.d(TAG, "W: ${gameView.height}")
+            }
         }
 
         val quitButton: Button = binding.quitButton
         quitButton.setOnClickListener {
+            isPlaying = false
             gameView.stopMoleAnimation()
         }
+    }
+
+    override fun onScoreUpdated(score: Int) {
+        /*
+         * Step 4/5 OBSERVER-PUBLISHER
+         * Implement the callback to handle the score
+         * published by GameView after each update.
+         * */
+        binding.scoreTextView.text = "Score: $score"
     }
 }
 

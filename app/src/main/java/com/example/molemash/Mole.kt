@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 import android.view.MotionEvent
 import android.view.View
 
-class Mole(private val context: Context, private val gameView: View) {
+class Mole(private val context: Context, private val gameView: View, private val levelSettings: LevelSettings) {
     private val moleBitmap: Bitmap = BitmapFactory.decodeResource(context.resources, R.drawable.mole)
     private var x: Float = 0f
     private var y: Float = 0f
@@ -30,7 +30,7 @@ class Mole(private val context: Context, private val gameView: View) {
                 updatePosition(gameView.width, gameView.height)
                 gameView.invalidate() // Request redraw
 
-                delay(1000) // Delay between animations
+                delay(levelSettings.getMoleSpeed(levelSettings.currentLevel).toLong()) // Delay between animations
             }
         }
     }
@@ -56,7 +56,8 @@ class Mole(private val context: Context, private val gameView: View) {
             val touchX = event.x
             val touchY = event.y
             if (isTouched(touchX, touchY)) {
-                isEnabled = false // Disable the mole when touched
+                isEnabled = false   // Disable the mole when touched
+                gameScope.cancel()  // Cancel the animation coroutine
                 return true // Mole was touched
             }
         }

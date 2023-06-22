@@ -37,7 +37,9 @@
     <FrameLayout
         android:id="@+id/gameCanvasContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_above="@+id/footerLayout"
+        android:layout_below="@id/headerLayout"/>
 
     <LinearLayout
         android:id="@+id/footerLayout"

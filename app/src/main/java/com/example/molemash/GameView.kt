@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Rect
+import android.media.MediaPlayer
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
@@ -15,6 +16,7 @@ class GameView(context: Context, levelSettings: LevelSettings) : View(context) {
     private val canvasBitmap: Bitmap = BitmapFactory.decodeResource(context.resources, R.drawable.mole_hole)
     private val TAG: String = "CANVAS VIEW"
     private var score: Int = 0
+    private val mediaPlayer: MediaPlayer = MediaPlayer.create(context, R.raw.mole_squashed)
 
     interface ScoreListener {
         /*
@@ -52,6 +54,7 @@ class GameView(context: Context, levelSettings: LevelSettings) : View(context) {
                 // Mole was touched, handle the result
                 // Use Mole's built-in handler
                 score += 15
+                mediaPlayer.start()
                 scoreListener?.onScoreUpdated(score)
                 return true
             }
@@ -89,4 +92,8 @@ class GameView(context: Context, levelSettings: LevelSettings) : View(context) {
         scoreListener = listener
     }
 
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        mediaPlayer.release()
+    }
 }

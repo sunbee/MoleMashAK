@@ -14,6 +14,7 @@ class GameView(context: Context, levelSettings: LevelSettings) : View(context) {
     private var molesArray: Array<Mole> = Array(numberMoles) { Mole(context, this)}
     private val canvasBitmap: Bitmap = BitmapFactory.decodeResource(context.resources, R.drawable.mole_hole)
     private val TAG: String = "CANVAS VIEW"
+
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         // Draw the background image

@@ -12,6 +12,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import android.view.MotionEvent
 import android.view.View
+import kotlinx.coroutines.isActive
 
 class Mole(private val context: Context, private val gameView: View, private val levelSettings: LevelSettings) {
     private val moleBitmap: Bitmap = BitmapFactory.decodeResource(context.resources, R.drawable.mole)
@@ -36,7 +37,9 @@ class Mole(private val context: Context, private val gameView: View, private val
     }
 
     fun stopAnimation() {
-        gameScope.cancel()
+        if (::gameScope.isInitialized)  {
+            gameScope.cancel()
+        }
     }
 
     private fun updatePosition(canvasWidth: Int, canvasHeight: Int) {

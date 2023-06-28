@@ -30,7 +30,8 @@
             android:layout_height="wrap_content"
             android:paddingLeft="20dp"
             android:text="Score: 0"
-            android:textSize="24sp" />
+            android:textColor="#04FFFF"
+            android:textSize="30sp" />
 
     </LinearLayout>
 

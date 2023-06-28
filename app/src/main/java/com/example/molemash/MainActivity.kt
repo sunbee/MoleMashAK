@@ -1,5 +1,6 @@
 package com.example.molemash
 
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -39,18 +40,21 @@ class MainActivity : AppCompatActivity(), GameView.ScoreListener {
         level1Button.setOnClickListener {
             levelSettings.currentLevel = 1
             // You can perform any additional actions or updates related to level 1 here
+            recolorButtons(1)
         }
 
         val level2Button: Button = binding.level2Button
         level2Button.setOnClickListener {
             levelSettings.currentLevel = 2
             // You can perform any additional actions or updates related to level 2 here
+            recolorButtons(2)
         }
 
         val level3Button: Button = binding.level3Button
         level3Button.setOnClickListener {
             levelSettings.currentLevel = 3
             // You can perform any additional actions or updates related to level 3 here
+            recolorButtons(3)
         }
 
         val startButton: Button = binding.startButton
@@ -79,6 +83,17 @@ class MainActivity : AppCompatActivity(), GameView.ScoreListener {
          * published by GameView after each update.
          * */
         binding.scoreTextView.text = "Score: $score"
+    }
+
+    fun recolorButtons(level: Int) {
+        binding.level1Button.setBackgroundColor(Color.parseColor("#6750a4"))
+        binding.level2Button.setBackgroundColor(Color.parseColor("#6750a4"))
+        binding.level3Button.setBackgroundColor(Color.parseColor("#6750a4"))
+        when (level) {
+            1 -> binding.level1Button.setBackgroundColor(Color.parseColor("#008080"))
+            2 -> binding.level2Button.setBackgroundColor(Color.parseColor("#008080"))
+            3 -> binding.level3Button.setBackgroundColor(Color.parseColor("#008080"))
+        }
     }
 }
 
